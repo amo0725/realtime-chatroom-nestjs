@@ -39,4 +39,8 @@ $ npm run start:dev
 
 ## Swagger
 
-[Take me to Swagger !](http://localhost:6001/api)
+[Take me to Swagger !](http://localhost:3000/api)
+
+## Test
+
+[Take me to Test !](http://localhost:3000)

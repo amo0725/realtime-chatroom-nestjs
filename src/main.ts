@@ -6,20 +6,25 @@ import { AppModule } from './app.module';
 import { Logger, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { resolve } from 'path';
 
 const { SERVICE_HOST, SERVICE_PORT, NODE_ENV, SERVICE_NAME, SERVICE_API_URL } =
   process.env;
 
 async function bootstrap() {
   initializeTransactionalContext();
-  const app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger:
       NODE_ENV === 'production' || NODE_ENV === 'development'
         ? ['error', 'warn', 'debug']
         : null,
   });
+
+  app.useStaticAssets(resolve('./src/static'));
   app.enableCors();
   app.enableVersioning({ type: VersioningType.URI });
+
   const config = new DocumentBuilder()
     .setTitle(pack.name)
     .setDescription(`The ${SERVICE_NAME} API ${pack.description}`)
@@ -32,6 +37,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
   }
+
   app.setGlobalPrefix('api');
 
   await app.listen(SERVICE_PORT);
