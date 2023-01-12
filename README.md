@@ -49,7 +49,7 @@ $ npm run start:dev
 4. `MySQL` will save chat history.( Maybe create `DB-0` DB for `userID` Or `roomID % n = 0`,
    `DB-1` DB for `userID` Or `roomID % n = 0 `, etc. )
 
-5. `Redis` will cache for chatroom message in `MySQL`.
+5. `Redis` will cache for `MySQL` queries.
 
 6. `WebSocket` will help message transfer & create message in `MySQL`.
 
