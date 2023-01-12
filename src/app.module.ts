@@ -1,10 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeormConfig } from '../ormconfig';
+import { addTransactionalDataSource } from 'typeorm-transactional';
+import { DataSource } from 'typeorm';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TypeOrmModule.forRootAsync({
+      useFactory: () => {
+        return {
+          ...typeormConfig,
+          entities: [],
+        };
+      },
+      async dataSourceFactory(options) {
+        return addTransactionalDataSource(new DataSource(options));
+      },
+    }),
+  ],
 })
 export class AppModule {}
