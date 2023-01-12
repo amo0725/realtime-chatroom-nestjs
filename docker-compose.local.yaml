@@ -21,6 +21,20 @@ services:
     networks:
       - local-network
 
+  redis:
+    env_file:
+      - .env
+    image: redis:${REDIS_VERSION}
+    container_name: ${SERVICE_NAME}-redis
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - .redis-volume:/data
+
+    ports:
+      - '${REDIS_PORT}:6379'
+    networks:
+      - local-network
+
 networks:
   local-network:
     name: local-network

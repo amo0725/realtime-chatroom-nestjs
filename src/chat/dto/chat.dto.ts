@@ -13,6 +13,10 @@ export class BodyCreateChatDTO {
   @IsString()
   @ApiProperty()
   to: string;
+
+  @IsString()
+  @ApiProperty()
+  room: string;
 }
 
 export class ParamGetChatDTO {

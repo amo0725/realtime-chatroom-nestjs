@@ -37,10 +37,36 @@ $ npm run start
 $ npm run start:dev
 ```
 
-## Swagger
+## How it works
 
-[Take me to Swagger !](http://localhost:3000/api)
+1. `docker-compose` will create `mysql` container and `redis` container.
 
-## Test
+2. `TypeORM` will create `chat` table.
 
-[Take me to Test !](http://localhost:3000)
+3. `NestJS` will create a `webSocket` server for chatrooms,
+   and a `http` server for `Swagger` and `Test`.
+
+4. `MySQL` will save chat history.( Maybe create `DB-0` DB for `userID` Or `roomID % n = 0`,
+   `DB-1` DB for `userID` Or `roomID % n = 0 `, etc. )
+
+5. `Redis` will cache for chatroom message in `MySQL`.
+
+6. `WebSocket` will help message transfer & create message in `MySQL`.
+
+## How to use
+
+1. `Swagger` is for testing `API` connection. [Take me to Swagger !](http://localhost:3000/api)
+
+2. `Test` is for testing `WebSocket` connection. [Take me to Test !](http://localhost:3000)
+
+## Further features
+
+1. Authentication
+
+2. Multiple users in one room
+
+3. More Database
+
+4. Unit Test & E2E Test
+
+5. More fancy views
